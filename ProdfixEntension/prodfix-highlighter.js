@@ -149,75 +149,62 @@ class ProdfixHighlighter extends HTMLElement {
     };
   }
 
-  showWidgetOnGmail() {
-    // Create a button element
-    const button = document.createElement("button");
-    button.style.position = "fixed";
-    button.style.top = "5px";
-    button.style.right = "5px";
-    button.style.zIndex = "9999";
+  
+}
 
-    // // Create the SVG element for the icon
-    // const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    // svgIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    // svgIcon.setAttribute('viewBox', '0 0 24 24');
-    // svgIcon.setAttribute('width', '24');
-    // svgIcon.setAttribute('height', '24');
-    // svgIcon.innerHTML = '<path d="M16.7398 12.0022L12.0077 14.4008L7.27554 12.0024L12.0076 9.60373L16.7398 12.0022Z" fill="#535353"/><path fill-rule="evenodd" clip-rule="evenodd" d="M7.28546 12.0024L1 15.1884L2.93457 19.0049L12.0176 14.4008L7.28546 12.0024L12.0175 9.60373L2.93443 5L1 8.81661L7.28546 12.0024Z" fill="#43CBD1"/><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7145 12.0026L23 8.81654L21.0654 5L11.9824 9.6041L16.7145 12.0026L11.9825 14.4012L21.0656 19.005L23 15.1883L16.7145 12.0026Z" fill="#F88336"/>';
+function showWidgetOnGmail() {
 
-    // Append the SVG icon to the button
-    button.appendChild(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-<path d="M16.7398 12.0022L12.0077 14.4008L7.27554 12.0024L12.0076 9.60373L16.7398 12.0022Z" fill="#535353"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M7.28546 12.0024L1 15.1884L2.93457 19.0049L12.0176 14.4008L7.28546 12.0024L12.0175 9.60373L2.93443 5L1 8.81661L7.28546 12.0024Z" fill="#43CBD1"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M16.7145 12.0026L23 8.81654L21.0654 5L11.9824 9.6041L16.7145 12.0026L11.9825 14.4012L21.0656 19.005L23 15.1883L16.7145 12.0026Z" fill="#F88336"/>
-</svg>`);
+  const button = document.createElement("button");
+  button.style.top = "5px";
+  button.style.right = "5px";
+  button.style.paddingTop = "5px";
+  button.style.background = "none";
+  button.style.border = "hidden";
+  button.style.cursor = "pointer";
+  button.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M16.7398 12.0022L12.0077 14.4008L7.27554 12.0024L12.0076 9.60373L16.7398 12.0022Z" fill="#535353"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.28546 12.0024L1 15.1884L2.93457 19.0049L12.0176 14.4008L7.28546 12.0024L12.0175 9.60373L2.93443 5L1 8.81661L7.28546 12.0024Z" fill="#43CBD1"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7145 12.0026L23 8.81654L21.0654 5L11.9824 9.6041L16.7145 12.0026L11.9825 14.4012L21.0656 19.005L23 15.1883L16.7145 12.0026Z" fill="#F88336"/>
+  </svg>`
 
-    // Function to find the target element and insert the button before it
-    function findTargetElementAndInsertButton() {
-      console.log('finding element....');
-      const targetElement = document.evaluate(
-        '//div[@class="zo "]',
-        document,
-        null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null
-      ).singleNodeValue;
+  console.log('finding element....');
+    const targetElement = document.evaluate(
+      '//div[@class="zo "]',
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue;
 
-      if (targetElement) {
-        const parentElement = targetElement.parentElement;
-        if (parentElement) {
-          // Insert the button before the target element
-          parentElement.insertBefore(button, targetElement);
+    if (targetElement) {
+      const parentElement = targetElement.parentElement;
+      if (parentElement) {
+        // Insert the button before the target element
+        parentElement.insertBefore(button, targetElement);
 
-          // Add an event listener to the button
-          button.addEventListener("click", () => {
-            // Custom logic for the button click action
-            alert("Button clicked!");
-          });
-        }
-      } else {
-        // Retry after a short delay if the target element is not yet available
-        console.log('else part is calling');
-        setTimeout(findTargetElementAndInsertButton, 3000);
+        // Add an event listener to the button
+        button.addEventListener("click", () => {
+          // Custom logic for the button click action
+          alert("Button clicked!");
+        });
       }
+    } else {
+      // Retry after a short delay if the target element is not yet available
+      console.log('else part is calling');
+      setTimeout(showWidgetOnGmail(), 3000);
     }
-  }
 }
 
 window.customElements.define("prodfix-highlighter", ProdfixHighlighter);
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  const highlighter = new ProdfixHighlighter();
+  
   if (message.action === "callContentScriptFunction") {
     // Call the content script function when requested from the background script
-    highlighter.highlightSelection();
-  }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
     const highlighter = new ProdfixHighlighter();
-    highlighter.showWidgetOnGmail();
-      //chrome.tabs.sendMessage(tabs[0].id, { action: "showWidgetOnGmail" });
-  }, 10000);
+    highlighter.highlightSelection();
+  } else if (message.action === "pageFinishLoading") {
+    showWidgetOnGmail();
+  }
+  
 });
