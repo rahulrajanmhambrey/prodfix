@@ -1,0 +1,17 @@
+.popup-container {
+    margin: 0px;
+}
+
+.popup_title_img {
+    width: 100px;
+    height: 100px;
+}
+
+.popup_button {
+    width: 100px;
+    height: 50px;
+    border: hidden;
+    background-color: #535353;
+    color: white;
+    cursor: pointer;
+}

@@ -31,5 +31,9 @@
       },
       "description": "Create a task"
     }
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Press Ctrl+T to create a task"
   }
 }
