@@ -33,8 +33,20 @@ app.post('/prodfix/login/', function (req, res) {
     
  });
 
- app.get('/prodfix/tasks/', function (req, res) {
-    res.send('Get tasks');
+ app.get('/prodfix/tasks', function (req, res) {
+
+  console.log(Object.keys(req.body).length == 0);
+    if(Object.keys(req.body).length == 0){
+      GetTasks().then((result) => {
+        res.send(result);
+      });
+    }
+    else{
+      GetTasksByUrl(req.body.base_url).then((result) => {
+        res.send(result);
+      });
+    }  
+    
  });
 
  async function AddTask(taskdetails) {
@@ -55,7 +67,30 @@ app.post('/prodfix/login/', function (req, res) {
 }
 
 async function GetTasks(){
+  var result = [];
   var client = new MongoClient(url);
+
+  await client.db("prodfixdb").collection("tasks").find({}).toArray().then((res) => {
+    console.log(res);
+    result = res;
+    client.close();
+  });
+
+  return result;
+}
+
+async function GetTasksByUrl(baseurl){
+  var result = [];
+  var client = new MongoClient(url);
+
+  var query = { _baseurl: baseurl };
+  await client.db("prodfixdb").collection("tasks").find(query).toArray().then((res) => {
+    console.log(res);
+    result = res;
+    client.close();
+  });
+
+  return result;
 }
 
  var server = app.listen(8000, function () {
