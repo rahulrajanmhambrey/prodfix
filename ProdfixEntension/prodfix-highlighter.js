@@ -82,11 +82,11 @@ class ProdfixHighlighter extends HTMLElement {
   }
 
   highlightSelection() {
+    this.createTask();
     var userSelection = window.getSelection();
     for (let i = 0; i < userSelection.rangeCount; i++) {
       this.highlightRange(userSelection.getRangeAt(i));
     }
-    this.createTask();
     window.getSelection().empty();
   }
 
@@ -97,21 +97,44 @@ class ProdfixHighlighter extends HTMLElement {
     range.insertNode(clone);
   }
 
+  getElementDetails() {
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed) {
+        const currentElement = selection.anchorNode.parentElement;
+        if (currentElement) {
+          const elementDetails = {
+            tagName: currentElement.tagName,
+            id: currentElement.id,
+            className: currentElement.className,
+            innerHTML: currentElement.innerHTML
+        };
+
+        // Convert the element details to a JSON string
+        const jsonElementDetails = JSON.stringify(elementDetails);
+          return jsonElementDetails;
+        } else {
+            console.log("No current element found for the selected text.");
+        }
+    }
+  }
+
   createTask() {
     const req = new XMLHttpRequest();
-    const baseUrl = "http://localhost/prodfix/task/add";
+    const apiUrl = "http://localhost/prodfix/task/add";
     const taskUrl = window.location.href;
+    const baseUrl = window.location.origin;
     const taskName = window.getSelection().toString();
     const taskDesc = window.getSelection().toString();
 
     const params = {
       task_name: taskName,
       task_description: taskDesc,
-      base_url: taskUrl,
-      element_details: {},
+      base_url: baseUrl,
+      taskurl: taskUrl,
+      element_details: this.getElementDetails(),
     };
 
-    req.open("POST", baseUrl, true);
+    req.open("POST", apiUrl, true);
     req.setRequestHeader("Content-type", "application/json");
     req.send(JSON.stringify(params));
 
