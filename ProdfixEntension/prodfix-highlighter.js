@@ -100,7 +100,7 @@ class ProdfixHighlighter extends HTMLElement {
   createTask() {
     const req = new XMLHttpRequest();
     const baseUrl = "http://localhost/prodfix/task/add";
-    const taskUrl = window.location.origin;
+    const taskUrl = window.location.href;
     const taskName = window.getSelection().toString();
     const taskDesc = window.getSelection().toString();
 
