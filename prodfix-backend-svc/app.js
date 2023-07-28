@@ -2,6 +2,7 @@ const taskService = require("./tasksvc.js");
 
 const express = require("express");
 const cors = require('cors');
+const { ObjectId } = require("mongodb");
 
 const app = express();
 
@@ -59,6 +60,14 @@ app.post('/prodfix/login/', function (req, res) {
     
  });
 
+ app.delete('/prodfix/task', function(req, res) {
+  RemoveTask(req.body.id).then((result) => {
+    res.send(result);
+  });
+ });
+
+
+
  async function AddTask(taskdetails) {
    var result = false;
    var client = new MongoClient(url);
@@ -74,6 +83,20 @@ app.post('/prodfix/login/', function (req, res) {
    });
 
      return result;
+}
+
+async function RemoveTask(id){
+  var result = false;
+  var client = new MongoClient(url);
+  var query = {_id: new ObjectId(id)};
+
+  await client.db("prodfixdb").collection("tasks").deleteOne(query).then((res) => {
+    console.log(res);
+    result = true;
+    client.close();
+  });
+
+  return result;
 }
 
 async function GetTasks(){
