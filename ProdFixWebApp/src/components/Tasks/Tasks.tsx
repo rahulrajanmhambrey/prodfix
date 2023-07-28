@@ -4,33 +4,42 @@ import PropTypes from "prop-types";
 import "./tasks.css";
 import simage from "./salesforce.png"
 type TasksProps = {
-  key: string;
+  task_id: string;
   taskName: string;
   taskDescription: string;
   url: string;
   baseUrl: string;
   elementDetails: string;
   createdTimestamp: string;
+  onDelete: () => void;
 };
 const Tasks = ({
-  key,
+  task_id,
   taskName,
   taskDescription,
   url,
   baseUrl,
   elementDetails,
   createdTimestamp,
+  onDelete,
 }: TasksProps) => {
+  const timestampDate = new Date(createdTimestamp);
+  const hours = timestampDate.getHours();
+  const minutes = timestampDate.getMinutes();
+  const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}`;
+
   return (
     <div className="container">
       <p>Today</p>
       <div id="task_container">
         <div className="tcp">
-          <div id="toggle-icon">
+          <div id="toggle-icon" onClick={onDelete}>
             <img src={taskCompletionBox}></img>
           </div>
           <div id="time-box">
-            <div id="time-value">9:46</div>
+            <div id="time-value">{formattedTime}</div>
           </div>
           <div id="task">
             <div>
@@ -101,5 +110,6 @@ Tasks.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   elementDetails: PropTypes.string.isRequired,
   createdTimestamp: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 export default Tasks;
