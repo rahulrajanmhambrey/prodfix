@@ -33,11 +33,6 @@
   margin: 10px;
   width: 150px;
 }
-#user {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 #user > img {
   height: 40px;
 }
