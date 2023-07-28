@@ -176,6 +176,9 @@ function showWidgetOnGmail() {
       null
     ).singleNodeValue;
 
+    let retryCounter = 0;
+    const maxRetries = 3;
+
     if (targetElement) {
       const parentElement = targetElement.parentElement;
       if (parentElement) {
@@ -189,9 +192,14 @@ function showWidgetOnGmail() {
         });
       }
     } else {
+      if (retryCounter < maxRetries) {
+        retryCounter++;
       // Retry after a short delay if the target element is not yet available
-      console.log('else part is calling');
+      console.log('retrying');
       setTimeout(showWidgetOnGmail(), 3000);
+      }else{
+        console.log('retrying done');
+      }
     }
 }
 
