@@ -1,5 +1,6 @@
 {
   "name": "Prodfix",
+  "description": "Boost productivity with ProdFix for enhanced contextual task management. Never miss a to-do again on any digital platform.",
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
@@ -35,5 +36,9 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "Press Ctrl+T to create a task"
-  }
+  },
+  "permissions": [
+    "webNavigation",
+    "activeTab"
+  ]
 }
