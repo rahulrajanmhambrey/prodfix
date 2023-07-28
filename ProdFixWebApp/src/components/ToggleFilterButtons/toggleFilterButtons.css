@@ -1,0 +1,43 @@
+#outer-container {
+  display: grid;
+  place-items: center;
+  margin-bottom: 50px;
+}
+#toggleFilter-container {
+  display: flex;
+  justify-content: space-between;
+  width: 918px;
+}
+#toggle-buttons {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+#closed-tasks {
+  height: 44px;
+  width: 71px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px 1px 1px 8px;
+}
+#pending-tasks {
+  height: 44px;
+  width: 71px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1px 8px 8px 1px;
+  margin-left: 3px;
+}
+#filter-button {
+  height: 44px;
+  width: 71px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}

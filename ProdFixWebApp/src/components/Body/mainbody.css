@@ -1,0 +1,5 @@
+#main-body-container {
+  background-color: #f6f6f6;
+  min-height: calc(100vh - 64px);
+  margin: 0;
+}
