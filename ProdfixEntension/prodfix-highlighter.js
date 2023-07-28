@@ -152,6 +152,8 @@ class ProdfixHighlighter extends HTMLElement {
   
 }
 
+let isWidgetVisible = false;
+
 function showWidgetOnGmail() {
 
   const button = document.createElement("button");
@@ -176,6 +178,9 @@ function showWidgetOnGmail() {
       null
     ).singleNodeValue;
 
+    let retryCounter = 0;
+    const maxRetries = 3;
+
     if (targetElement) {
       const parentElement = targetElement.parentElement;
       if (parentElement) {
@@ -185,14 +190,54 @@ function showWidgetOnGmail() {
         // Add an event listener to the button
         button.addEventListener("click", () => {
           // Custom logic for the button click action
-          alert("Button clicked!");
+          showWidget();
         });
       }
     } else {
+      if (retryCounter < maxRetries) {
+        retryCounter++;
       // Retry after a short delay if the target element is not yet available
-      console.log('else part is calling');
+      console.log('retrying');
       setTimeout(showWidgetOnGmail(), 3000);
+      }else{
+        console.log('retrying done');
+      }
     }
+}
+
+const showWidget = () => {
+  if (!isWidgetVisible) {
+    const modal = document.createElement("widget");
+    modal.setAttribute(
+    "style",`
+    width:430px;
+    height:570px;
+    border: none;
+    top:64px;
+    right: 80px;
+    z-index: 999;
+    background-color:white;
+    position: fixed; 
+    box-shadow: 0px 12px 48px rgba(29, 5, 64, 0.32);
+    `
+    );
+    
+    modal.innerHTML = `<iframe id="widget-content"; style="height:100%; width:100%; border: none; outline: none; box-shadow: none"></iframe>`;
+    // <div style="position:absolute; top:0px; left:5px;">
+    // <button id="widget-close-btn" style="padding: 8px 12px; font-size: 16px; border: none; border-radius: 20px;">x</button>
+    // </div>
+  
+    document.body.appendChild(modal);
+    const iframe = document.getElementById("widget-content");
+    iframe.src = "http://localhost:3000/";
+
+    isWidgetVisible = true;
+  } else {
+    const widgetElement = document.getElementsByTagName("widget")
+    widgetElement.style.display = "none";
+    isWidgetVisible = false;
+  }
+  
 }
 
 window.customElements.define("prodfix-highlighter", ProdfixHighlighter);

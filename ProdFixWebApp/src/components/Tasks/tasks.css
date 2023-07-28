@@ -5,36 +5,47 @@
   align-content: stretch;
   justify-content: space-around;
 }
+.container {
+  text-align: left;
+}
 #task_container {
   display: flex;
   justify-content: space-between;
-  height: 92px;
-  width: 918px;
   align-items: center;
-  background-color: #ffffff;
   border-radius: 10px;
+}
+.tcp > div {
+  margin: 0 15px 0 0;
+}
+.tcp {
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+#email {
+  font-size: 12px;
+}
+.tcp svg {
+  height: 10px;
 }
 #toggle-icon {
   margin-left: 25px;
 }
-#moveable-button {
-  margin: 33px 20px 0 130px;
-}
 #time-box {
-  height: 24px;
   width: 72px;
   background-color: #f8f8f8;
-  padding: 2px;
+  color: black;
+  text-align: center;
+  padding: 2px 5px;
   border-radius: 8px;
   font-size: 14px;
 }
-#time-value {
-  top: 3px;
-  position: relative;
-}
 #task {
   text-align: left;
-  font-size: 18;
+  display: flex;
+  align-items: flex-start;
   font-weight: 400;
 }
 #email {
