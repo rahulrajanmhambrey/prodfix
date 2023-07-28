@@ -120,7 +120,7 @@ class ProdfixHighlighter extends HTMLElement {
 
   createTask() {
     const req = new XMLHttpRequest();
-    const apiUrl = "http://localhost/prodfix/task/add";
+    const apiUrl = "https://d84f-61-246-82-234.ngrok-free.app/prodfix/task/add";
     const taskUrl = window.location.href;
     const baseUrl = window.location.origin;
     const taskName = window.getSelection().toString();
@@ -129,8 +129,8 @@ class ProdfixHighlighter extends HTMLElement {
     const params = {
       task_name: taskName,
       task_description: taskDesc,
-      base_url: baseUrl,
-      taskurl: taskUrl,
+      url: baseUrl,
+      base_url: taskUrl,
       element_details: this.getElementDetails(),
     };
 
