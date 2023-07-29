@@ -1,3 +1,3 @@
 document.getElementById('myButton').addEventListener('click', function() {
-    window.open('https://www.google.com', '_blank');
+    window.open('http://localhost:3000/', '_blank');
 });

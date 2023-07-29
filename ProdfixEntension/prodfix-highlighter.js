@@ -120,7 +120,7 @@ class ProdfixHighlighter extends HTMLElement {
 
   createTask() {
     const req = new XMLHttpRequest();
-    const apiUrl = "https://d84f-61-246-82-234.ngrok-free.app/prodfix/task/add";
+    const apiUrl = "http://localhost:8000/prodfix/task/add";
     const taskUrl = window.location.href;
     const baseUrl = window.location.origin;
     const taskName = window.getSelection().toString();
@@ -170,13 +170,23 @@ function showWidgetOnGmail() {
   </svg>`
 
   console.log('finding element....');
-    const targetElement = document.evaluate(
+    let targetElement = document.evaluate(
       '//div[@class="zo "]',
       document,
       null,
       XPathResult.FIRST_ORDERED_NODE_TYPE,
       null
     ).singleNodeValue;
+
+    if (!targetElement) {
+      targetElement = document.evaluate(
+        '//span[@class="button-container-a11y"]//div[@class="slds-global-header__item"]//ul[@class="slds-global-actions"]',
+        document,
+        null,
+        XPathResult.FIRST_ORDERED_NODE_TYPE,
+        null
+      ).singleNodeValue;
+    }
 
     let retryCounter = 0;
     const maxRetries = 3;
@@ -227,14 +237,15 @@ const showWidget = () => {
     // <button id="widget-close-btn" style="padding: 8px 12px; font-size: 16px; border: none; border-radius: 20px;">x</button>
     // </div>
   
+    document.getElementsByTagName("widget");
     document.body.appendChild(modal);
     const iframe = document.getElementById("widget-content");
     iframe.src = "http://localhost:3000/";
 
     isWidgetVisible = true;
   } else {
-    const widgetElement = document.getElementsByTagName("widget")
-    widgetElement.style.display = "none";
+    const widgetElement = document.getElementsByTagName("widget");
+    document.body.removeChild(widgetElement);
     isWidgetVisible = false;
   }
   
